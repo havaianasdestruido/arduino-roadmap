@@ -125,19 +125,19 @@ export function Tree() {
           <svg viewBox="0 0 1000 510" role="img" aria-label="Family tree of Arduino boards from 2005 to 2013">
             <defs>
               <marker id="arr" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
-                <path d="M0 0L10 5L0 10z" fill="#1f5c94" />
+                <path d="M0 0L10 5L0 10z" fill="var(--blue)" />
               </marker>
             </defs>
             {Array.from({ length: 9 }, (_, i) => 2005 + i).map((y) => (
               <g key={y}>
-                <line x1={X(y)} y1="40" x2={X(y)} y2="496" stroke="#d6d2c3" strokeDasharray="2 5" />
-                <text x={X(y)} y="26" textAnchor="middle" fontFamily="var(--mono)" fontSize="15" fill="#43535c">
+                <line x1={X(y)} y1="40" x2={X(y)} y2="496" stroke="var(--line)" strokeDasharray="2 5" />
+                <text x={X(y)} y="26" textAnchor="middle" fontFamily="var(--mono)" fontSize="15" fill="var(--ink-2)">
                   {y}
                 </text>
               </g>
             ))}
             {LANES.map((l, i) => (
-              <text key={l} x="10" y={Y(i) + 3.5} fontFamily="var(--mono)" fontSize="9.5" letterSpacing="1.2" fill="#74828a">
+              <text key={l} x="10" y={Y(i) + 3.5} fontFamily="var(--mono)" fontSize="9.5" letterSpacing="1.2" fill="var(--ink-3)">
                 {l.toUpperCase()}
               </text>
             ))}
@@ -155,7 +155,7 @@ export function Tree() {
                   key={a + b}
                   d={`M${x1} ${y1}C${mx} ${y1} ${mx} ${y2} ${x2} ${y2}`}
                   fill="none"
-                  stroke="#1f5c94"
+                  stroke="var(--blue)"
                   strokeWidth={on ? 2.6 : 1.6}
                   opacity={on ? 1 : 0.22}
                   markerEnd="url(#arr)"
@@ -183,7 +183,7 @@ export function Tree() {
                   }}
                 >
                   <rect x="-22" y="-22" width="44" height="44" fill="transparent" stroke="none" style={{ transform: 'none' }} />
-                  {n.id === sel && <rect x="-11" y="-11" width="22" height="22" rx="4" fill="none" stroke="#13232c" strokeWidth="1.8" style={{ transform: 'none' }} />}
+                  {n.id === sel && <rect x="-11" y="-11" width="22" height="22" rx="4" fill="none" stroke="var(--ink)" strokeWidth="1.8" style={{ transform: 'none' }} />}
                   <rect x="-7" y="-7" width="14" height="14" rx="2.5" fill={CHIPS[n.chip][1]} />
                   <text y={below ? 24 : -15} textAnchor="middle">
                     {n.label}
