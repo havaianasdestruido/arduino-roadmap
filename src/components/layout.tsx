@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
+import { refreshTheme } from '../three/engine';
 import { Scope } from './Figure';
 
 /* ---------- tiny stores shared across the page ---------- */
@@ -27,6 +28,64 @@ export const yearStore = store(2005);
 export const blinkStore = store(1000);
 
 const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const THEME_KEY = 'arduino-theme';
+type Theme = 'dark' | 'light';
+
+function currentTheme(): Theme {
+  return document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+}
+
+function applyTheme(theme: Theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#10181c' : '#f5f3ec');
+  try {
+    localStorage.setItem(THEME_KEY, theme);
+  } catch {
+    /* ignore quota / private mode */
+  }
+  refreshTheme();
+}
+
+function SunIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4.2" />
+      <path d="M12 3.2v2.1M12 18.7v2.1M4.9 4.9l1.5 1.5M17.6 17.6l1.5 1.5M3.2 12h2.1M18.7 12h2.1M4.9 19.1l1.5-1.5M17.6 6.4l1.5-1.5" />
+    </svg>
+  );
+}
+
+function MoonIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M16.4 13.6A6.4 6.4 0 0 1 10.4 5.2 7 7 0 1 0 18.8 13.6a6.3 6.3 0 0 1-2.4 0Z" />
+    </svg>
+  );
+}
+
+function ThemeToggle() {
+  const [theme, setTheme] = useState<Theme>(currentTheme);
+  const next: Theme = theme === 'dark' ? 'light' : 'dark';
+
+  useEffect(() => {
+    applyTheme(theme);
+  }, [theme]);
+
+  return (
+    <button
+      type="button"
+      className="theme-toggle"
+      aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+      title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
+      data-cursor="-magnetic -gold"
+      data-cursor-stick
+      onClick={() => setTheme(next)}
+    >
+      {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
+    </button>
+  );
+}
 
 /* ---------- top bar: the infographic's year axis ---------- */
 
@@ -83,24 +142,27 @@ export function TopBar() {
         <span className="bar-led" style={{ animationDuration: `${blink * 2}ms` }} aria-hidden="true" />
         <span className="bar-name">Board Field Guide</span>
       </a>
-      <nav className="bar-years" aria-label="Jump to year">
-        {YEARS.map((y) => (
-          <button
-            key={y}
-            type="button"
-            className={y === year ? 'is-on' : ''}
-            aria-current={y === year ? 'true' : undefined}
-            data-cursor={y === year ? '-magnetic -hot' : '-magnetic'}
-            data-cursor-stick
-            onClick={() => jump(y)}
-          >
-            <span className="yy-full">{y}</span>
-            <span className="yy-short" aria-hidden="true">
-              ’{String(y).slice(2)}
-            </span>
-          </button>
-        ))}
-      </nav>
+      <div className="bar-end">
+        <nav className="bar-years" aria-label="Jump to year">
+          {YEARS.map((y) => (
+            <button
+              key={y}
+              type="button"
+              className={y === year ? 'is-on' : ''}
+              aria-current={y === year ? 'true' : undefined}
+              data-cursor={y === year ? '-magnetic -hot' : '-magnetic'}
+              data-cursor-stick
+              onClick={() => jump(y)}
+            >
+              <span className="yy-full">{y}</span>
+              <span className="yy-short" aria-hidden="true">
+                ’{String(y).slice(2)}
+              </span>
+            </button>
+          ))}
+        </nav>
+        <ThemeToggle />
+      </div>
       <span className="bar-line" ref={line} aria-hidden="true" />
     </div>
   );

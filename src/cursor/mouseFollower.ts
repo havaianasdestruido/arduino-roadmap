@@ -20,6 +20,8 @@ export type CursorState =
   | '-media-lg'
   | '-media-float'
   | '-inverse'
+  | '-on-dark'
+  | '-on-light'
   | '-exclusion'
   | '-opaque'
   | '-solid'

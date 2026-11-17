@@ -50,46 +50,69 @@
   position: relative;
 }
 
-/* ---------- color accents ---------- */
+/* ---------- color accents (dark-default + light-mode contrast) ---------- */
 
 .mf-cursor.-inverse {
-  color: var(--paper, #f5f3ec);
-  --mf-fg: var(--ink, #13232c);
+  color: var(--paper, #10181c);
+  --mf-fg: var(--ink, #e7ece8);
+}
+
+.mf-cursor.-on-dark {
+  color: #f5f3ec;
+  --mf-fg: #13232c;
+}
+
+.mf-cursor.-on-light {
+  color: #13232c;
+  --mf-fg: #f5f3ec;
 }
 
 .mf-cursor.-teal {
-  color: var(--teal, #00848d);
-  --mf-fg: #ffffff;
+  color: var(--teal, #2aabb4);
+  --mf-fg: #10181c;
 }
 
 .mf-cursor.-cyan {
-  color: var(--cyan, #35b6d6);
-  --mf-fg: var(--ink, #13232c);
+  color: var(--cyan, #4ec5e0);
+  --mf-fg: #10181c;
 }
 
 .mf-cursor.-blue {
-  color: var(--blue, #1f5c94);
-  --mf-fg: #ffffff;
+  color: var(--blue, #7eb4e0);
+  --mf-fg: #10181c;
 }
 
 .mf-cursor.-gold {
-  color: var(--gold, #b9831a);
-  --mf-fg: #ffffff;
+  color: var(--gold, #d4a03a);
+  --mf-fg: #10181c;
 }
 
 .mf-cursor.-hot {
-  color: var(--hot, #e0501f);
-  --mf-fg: #ffffff;
+  color: var(--hot, #e86a38);
+  --mf-fg: #10181c;
 }
 
 .mf-cursor.-copper {
-  color: var(--copper, #bf6f38);
-  --mf-fg: #ffffff;
+  color: var(--copper, #d48955);
+  --mf-fg: #10181c;
 }
 
 .mf-cursor.-purple {
-  color: var(--purple, #6a3d9a);
+  color: var(--purple, #b07ad4);
+  --mf-fg: #10181c;
+}
+
+html[data-theme="light"] .mf-cursor.-teal,
+html[data-theme="light"] .mf-cursor.-blue,
+html[data-theme="light"] .mf-cursor.-gold,
+html[data-theme="light"] .mf-cursor.-hot,
+html[data-theme="light"] .mf-cursor.-copper,
+html[data-theme="light"] .mf-cursor.-purple {
   --mf-fg: #ffffff;
+}
+
+html[data-theme="light"] .mf-cursor.-cyan {
+  --mf-fg: #13232c;
 }
 
 /* ---------- active (mousedown) ---------- */
@@ -394,10 +417,16 @@
   padding: 1px;
   opacity: 0;
   border-radius: 50%;
-  box-shadow: 0 14px 36px rgba(19, 35, 44, 0.28);
+  box-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(231, 236, 232, 0.12);
   transition:
     transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
     opacity 0.2s ease 0.12s;
+}
+
+html[data-theme="light"] .mf-cursor-media-box {
+  box-shadow: 0 14px 36px rgba(19, 35, 44, 0.28);
 }
 
 .mf-cursor.-media .mf-cursor-media-box {

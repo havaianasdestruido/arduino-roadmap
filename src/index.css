@@ -1,6 +1,36 @@
 @import "tailwindcss";
 
 :root {
+  color-scheme: dark;
+  --paper: #10181c;
+  --paper-2: #182328;
+  --ink: #e7ece8;
+  --ink-2: #b3c0c5;
+  --ink-3: #84949b;
+  --line: #2c3c44;
+  --teal: #2aabb4;
+  --cyan: #4ec5e0;
+  --blue: #7eb4e0;
+  --gold: #d4a03a;
+  --hot: #e86a38;
+  --copper: #d48955;
+  --purple: #b07ad4;
+  --track: #2c3c44;
+  --warn: #f0946c;
+  --foot: #161f24;
+  --foot-ink: #b8c5c9;
+  --code-bg: #080c0e;
+  --code-fg: #d6e2e6;
+  --tag-ink: #13232c;
+  --tag-paper: #e7ece8;
+  --bar: 44px;
+  --display: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", sans-serif;
+  --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
   --paper: #f5f3ec;
   --paper-2: #ece9de;
   --ink: #13232c;
@@ -14,10 +44,14 @@
   --hot: #e0501f;
   --copper: #bf6f38;
   --purple: #6a3d9a;
-  --bar: 44px;
-  --display: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", sans-serif;
-  --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --track: #d3cfc0;
+  --warn: #a43310;
+  --foot: #13232c;
+  --foot-ink: #c9d5d9;
+  --code-bg: #13232c;
+  --code-fg: #d6e2e6;
+  --tag-ink: #13232c;
+  --tag-paper: #f5f3ec;
 }
 
 html {
@@ -87,19 +121,47 @@ section[id] {
   height: 9px;
   border-radius: 2px;
   background: #ffa41c;
-  box-shadow: 0 0 0 1px rgba(19, 35, 44, 0.25), 0 0 9px 2px rgba(255, 164, 28, 0.75);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 25%, transparent), 0 0 9px 2px rgba(255, 164, 28, 0.75);
   animation: blink 2000ms steps(1, end) infinite;
 }
 @keyframes blink {
   0% {
     background: #ffa41c;
-    box-shadow: 0 0 0 1px rgba(19, 35, 44, 0.25), 0 0 9px 2px rgba(255, 164, 28, 0.75);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 25%, transparent), 0 0 9px 2px rgba(255, 164, 28, 0.75);
   }
   50%,
   100% {
     background: #cbb98f;
-    box-shadow: 0 0 0 1px rgba(19, 35, 44, 0.25);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 25%, transparent);
   }
+}
+.bar-end {
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
+  gap: 0.1rem;
+}
+.theme-toggle {
+  appearance: none;
+  background: none;
+  border: 0;
+  flex-shrink: 0;
+  width: 2.4rem;
+  min-height: var(--bar);
+  display: grid;
+  place-items: center;
+  color: var(--ink-3);
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+}
+.theme-toggle:hover {
+  color: var(--ink);
+}
+.theme-toggle svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  display: block;
 }
 .bar-years {
   display: flex;
@@ -193,7 +255,7 @@ section[id] {
   font-size: 0.72rem;
   line-height: 1.35;
   letter-spacing: 0.12em;
-  color: rgba(19, 35, 44, 0.11);
+  color: color-mix(in srgb, var(--ink) 11%, transparent);
   white-space: nowrap;
   overflow: hidden;
   user-select: none;
@@ -219,12 +281,12 @@ section[id] {
 }
 .tag b {
   background: var(--cyan);
-  color: var(--ink);
+  color: var(--tag-ink);
   font-weight: 800;
   padding: 0.38rem 0.55rem 0.34rem;
 }
 .tag span {
-  background: var(--ink);
+  background: var(--tag-ink);
   color: var(--cyan);
   font-weight: 500;
   padding: 0.38rem 0.6rem 0.34rem;
@@ -517,7 +579,6 @@ figcaption {
 /* sliders: a thin track and a knob you can't miss */
 .slider {
   display: block;
-  --track: #d3cfc0;
 }
 .slider-head {
   display: flex;
@@ -587,7 +648,7 @@ figcaption {
   border-radius: 50%;
   background: var(--c);
   border: 3px solid var(--paper);
-  box-shadow: 0 0 0 1.5px rgba(19, 35, 44, 0.28), 0 3px 7px rgba(19, 35, 44, 0.22);
+  box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--ink) 28%, transparent), 0 3px 7px color-mix(in srgb, var(--ink) 22%, transparent);
   transition: transform 0.15s ease;
 }
 .range::-moz-range-thumb {
@@ -596,7 +657,7 @@ figcaption {
   border-radius: 50%;
   background: var(--c);
   border: 3px solid var(--paper);
-  box-shadow: 0 0 0 1.5px rgba(19, 35, 44, 0.28), 0 3px 7px rgba(19, 35, 44, 0.22);
+  box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--ink) 28%, transparent), 0 3px 7px color-mix(in srgb, var(--ink) 22%, transparent);
   transition: transform 0.15s ease;
 }
 .range:hover::-webkit-slider-thumb,
@@ -608,10 +669,10 @@ figcaption {
   transform: scale(1.1);
 }
 .range:focus-visible::-webkit-slider-thumb {
-  box-shadow: 0 0 0 2.5px var(--ink), 0 3px 7px rgba(19, 35, 44, 0.22);
+  box-shadow: 0 0 0 2.5px var(--ink), 0 3px 7px color-mix(in srgb, var(--ink) 22%, transparent);
 }
 .range:focus-visible::-moz-range-thumb {
-  box-shadow: 0 0 0 2.5px var(--ink), 0 3px 7px rgba(19, 35, 44, 0.22);
+  box-shadow: 0 0 0 2.5px var(--ink), 0 3px 7px color-mix(in srgb, var(--ink) 22%, transparent);
 }
 
 .segments {
@@ -691,7 +752,7 @@ figcaption {
   padding: 0.6rem 0.9rem;
   border: 1.5px solid var(--hot);
   border-radius: 8px;
-  color: #a43310;
+  color: var(--warn);
   font-size: 0.9rem;
   line-height: 1.45;
 }
@@ -700,8 +761,8 @@ figcaption {
   max-width: 33rem;
   margin: 0.8rem auto 0;
   padding: 0.9rem 1rem;
-  background: var(--ink);
-  color: #d6e2e6;
+  background: var(--code-bg);
+  color: var(--code-fg);
   border-radius: 8px;
   font-family: var(--mono);
   font-size: 0.82rem;
@@ -962,8 +1023,8 @@ figcaption {
 .foot {
   margin-top: clamp(5rem, 12vw, 9rem);
   padding: 2.5rem 1.25rem 3.5rem;
-  background: var(--ink);
-  color: #c9d5d9;
+  background: var(--foot);
+  color: var(--foot-ink);
   font-size: 0.9rem;
   line-height: 1.6;
 }
@@ -978,8 +1039,8 @@ figcaption {
   margin-bottom: 1.2rem;
 }
 .foot .tag span {
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--tag-paper);
+  color: var(--tag-ink);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -253,7 +253,7 @@ export function Uno() {
         caption="The orange LED marked L is wired to pin 13. Change the delay and watch the board, then glance at the top-left corner of this page."
       >
         {() => (
-          <pre className="code" aria-label="Blink sketch" data-cursor="-inverse">
+          <pre className="code" aria-label="Blink sketch" data-cursor="-on-dark">
             <span className="k">void</span> loop() {'{\n'}
             {'  '}digitalWrite(<span className="k">13</span>, HIGH);{'   '}
             <span className="c">// LED on</span>

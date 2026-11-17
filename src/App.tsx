@@ -23,7 +23,7 @@ export default function App() {
         <Due />
         <Tree />
       </main>
-      <footer className="foot" data-cursor="-inverse">
+      <footer className="foot" data-cursor="-on-dark">
         <div className="foot-in">
           <p className="tag" data-cursor="-exclusion">
             <b>Special</b>
