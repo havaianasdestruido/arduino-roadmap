@@ -21,6 +21,8 @@
   --foot-ink: #b8c5c9;
   --code-bg: #080c0e;
   --code-fg: #d6e2e6;
+  --tag-ink: #13232c;
+  --tag-paper: #e7ece8;
   --bar: 44px;
   --display: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", sans-serif;
   --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -48,6 +50,8 @@ html[data-theme="light"] {
   --foot-ink: #c9d5d9;
   --code-bg: #13232c;
   --code-fg: #d6e2e6;
+  --tag-ink: #13232c;
+  --tag-paper: #f5f3ec;
 }
 
 html {
@@ -277,12 +281,12 @@ section[id] {
 }
 .tag b {
   background: var(--cyan);
-  color: var(--ink);
+  color: var(--tag-ink);
   font-weight: 800;
   padding: 0.38rem 0.55rem 0.34rem;
 }
 .tag span {
-  background: var(--ink);
+  background: var(--tag-ink);
   color: var(--cyan);
   font-weight: 500;
   padding: 0.38rem 0.6rem 0.34rem;
@@ -1021,8 +1025,8 @@ figcaption {
   margin-bottom: 1.2rem;
 }
 .foot .tag span {
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--tag-paper);
+  color: var(--tag-ink);
 }
 
 @media (prefers-reduced-motion: reduce) {
