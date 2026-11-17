@@ -1,5 +1,6 @@
 import { createContext, forwardRef, useContext, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
+import { getCursor } from '../cursor';
 import { Fig } from '../three/engine';
 import type { View } from '../three/engine';
 import type { Api, Params, Setup } from '../three/scenes';
@@ -28,6 +29,7 @@ export function Term({ part, children }: { part: string; children: ReactNode }) 
       type="button"
       className={'term' + (on ? ' is-on' : '')}
       aria-pressed={on}
+      data-cursor="-opaque -hot"
       onPointerEnter={(e) => e.pointerType === 'mouse' && s?.setHl(part)}
       onPointerLeave={(e) => e.pointerType === 'mouse' && s?.setHl(null)}
       onFocus={() => s?.setHl(part)}
@@ -59,10 +61,25 @@ export interface Control {
   options?: string[];
 }
 
+const COLOR_TO_STATE: Record<string, string> = {
+  'var(--teal)': '-teal',
+  'var(--cyan)': '-cyan',
+  'var(--blue)': '-blue',
+  'var(--gold)': '-gold',
+  'var(--hot)': '-hot',
+  'var(--copper)': '-copper',
+  'var(--purple)': '-purple',
+};
+
 function Slider({ c, value, onChange }: { c: Control; value: number; onChange: (v: number) => void }) {
   const min = c.min ?? 0;
   const max = c.max ?? 1;
   const pct = ((value - min) / (max - min)) * 100;
+  const cursorState = c.color ? COLOR_TO_STATE[c.color] : '-teal';
+  const endScrub = () => getCursor()?.removeState('-dragging');
+
+  useEffect(() => endScrub, []);
+
   return (
     <label className="slider" style={{ '--c': c.color ?? 'var(--teal)' } as CSSProperties}>
       <span className="slider-head">
@@ -77,6 +94,15 @@ function Slider({ c, value, onChange }: { c: Control; value: number; onChange: (
         step={c.step ?? 0.001}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
+        onPointerDown={(e) => {
+          if (e.pointerType === 'mouse') {
+            getCursor()?.addState('-dragging');
+            window.addEventListener('pointerup', endScrub, { once: true, passive: true });
+            window.addEventListener('pointercancel', endScrub, { once: true, passive: true });
+          }
+        }}
+        data-cursor={cursorState}
+        data-cursor-icon="slide"
         style={{ '--p': pct + '%' } as CSSProperties}
         aria-valuetext={c.format ? c.format(value) : undefined}
       />
@@ -88,7 +114,15 @@ function Segments({ c, value, onChange }: { c: Control; value: number; onChange:
   return (
     <div className="segments" role="group" aria-label={c.label}>
       {c.options!.map((o, i) => (
-        <button key={o} type="button" className={i === value ? 'is-on' : ''} aria-pressed={i === value} onClick={() => onChange(i)}>
+        <button
+          key={o}
+          type="button"
+          className={i === value ? 'is-on' : ''}
+          aria-pressed={i === value}
+          data-cursor="-magnetic"
+          data-cursor-stick
+          onClick={() => onChange(i)}
+        >
           {o}
         </button>
       ))}
@@ -116,12 +150,30 @@ interface Props {
   fill?: boolean;
   caption?: ReactNode;
   className?: string;
+  /** Optional Cuberto cursor state modifier for the 3D stage (e.g. `"-teal"`, `"-copper"`). */
+  cursorState?: string;
+  /** Label shown inside the circle cursor over the 3D stage. Pass `""` to omit text mode. */
+  cursorText?: string;
   children?: (values: Record<string, number>) => ReactNode;
   onValues?: (values: Record<string, number>) => void;
 }
 
 export const Figure = forwardRef<FigureHandle, Props>(function Figure(
-  { setup, label, view, controls = [], params, aspect = 0.6, fill, caption, className, children, onValues },
+  {
+    setup,
+    label,
+    view,
+    controls = [],
+    params,
+    aspect = 0.6,
+    fill,
+    caption,
+    className,
+    cursorState,
+    cursorText = 'Drag',
+    children,
+    onValues,
+  },
   ref,
 ) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -201,6 +253,8 @@ export const Figure = forwardRef<FigureHandle, Props>(function Figure(
           tabIndex={0}
           role="img"
           aria-label={`${label}. Interactive 3D model: drag, or use the arrow keys, to rotate.`}
+          data-cursor={cursorState}
+          data-cursor-text={failed || !cursorText ? undefined : cursorText}
         />
         {!used && !failed && (
           <span className="fig-hint" aria-hidden="true">

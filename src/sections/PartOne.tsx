@@ -60,11 +60,11 @@ export function Hero() {
           ))}
         </div>
         <div className="hero-copy">
-          <p className="tag">
+          <p className="tag" data-cursor="-exclusion">
             <b>Special</b>
             <span>Board Field Guide</span>
           </p>
-          <h1>
+          <h1 data-cursor="-exclusion -lg">
             <span className="h1-top">Evolution of</span>
             <span className="h1-main">Arduino</span>
           </h1>
@@ -79,6 +79,7 @@ export function Hero() {
             fill
             setup={setupHero}
             label="Arduino Uno"
+            cursorState="-teal"
             view={{ yaw: -0.5, pitch: 0.95, radius: 48 }}
             params={{ explode: 0 }}
           />
@@ -129,8 +130,11 @@ export function Origins() {
         </Note>
         <p>
           What follows is the hardware side of that story. Each figure is live: drag it to turn it around, and where
-          there is a slider, pull it. Words <span className="term is-static">marked like this</span> point at part of
-          a model when you hover or tap them.
+          there is a slider, pull it. Words{' '}
+          <span className="term is-static" data-cursor="-opaque -hot">
+            marked like this
+          </span>{' '}
+          point at part of a model when you hover or tap them.
         </p>
       </Prose>
     </Chapter>
@@ -160,6 +164,7 @@ export function Etch() {
       <Figure
         setup={setupEtch}
         label="Single-sided serial board, copper side"
+        cursorState="-copper"
         view={{ yaw: -0.35, pitch: -0.95, box: [52, 40] }}
         aspect={0.6}
         controls={[
@@ -361,6 +366,7 @@ export function Chip() {
         <Figure
           setup={setupDecap}
           label="ATmega328 in a 28-pin dual in-line package, opened"
+          cursorState="-gold"
           view={{ yaw: -0.3, pitch: 0.9, radius: 21 }}
           aspect={0.56}
           controls={[{ key: 'open', label: 'Open', initial: 0, color: 'var(--gold)', format: pct }]}
@@ -400,6 +406,7 @@ export function Chip() {
       <Figure
         setup={setupPackages}
         label="PDIP-28, TQFP-32 and VQFN-32 packages at the same scale"
+        cursorState="-blue"
         view={{ yaw: -0.25, pitch: 0.95, box: [36, 14.5] }}
         aspect={0.46}
         controls={[{ key: 'flip', label: 'Flip', initial: 0, color: 'var(--blue)', format: (v) => `${Math.round(v * 180)}°` }]}
@@ -441,6 +448,7 @@ export function Small() {
         <Figure
           setup={setupNano}
           label="Arduino Nano above a solderless breadboard"
+          cursorState="-teal"
           view={{ yaw: -0.5, pitch: 0.8, box: [50, 36] }}
           aspect={0.58}
           controls={[{ key: 'seat', label: 'Press in', initial: 0, color: 'var(--teal)', format: pct }]}

@@ -78,6 +78,8 @@ function ThemeToggle() {
       className="theme-toggle"
       aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
       title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
+      data-cursor="-magnetic -gold"
+      data-cursor-stick
       onClick={() => setTheme(next)}
     >
       {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
@@ -130,14 +132,28 @@ export function TopBar() {
 
   return (
     <div className="bar">
-      <a className="bar-brand" href="#top" aria-label="Evolution of Arduino — back to top">
+      <a
+        className="bar-brand"
+        href="#top"
+        aria-label="Evolution of Arduino — back to top"
+        data-cursor="-magnetic -teal"
+        data-cursor-stick
+      >
         <span className="bar-led" style={{ animationDuration: `${blink * 2}ms` }} aria-hidden="true" />
         <span className="bar-name">Board Field Guide</span>
       </a>
       <div className="bar-end">
         <nav className="bar-years" aria-label="Jump to year">
           {YEARS.map((y) => (
-            <button key={y} type="button" className={y === year ? 'is-on' : ''} aria-current={y === year ? 'true' : undefined} onClick={() => jump(y)}>
+            <button
+              key={y}
+              type="button"
+              className={y === year ? 'is-on' : ''}
+              aria-current={y === year ? 'true' : undefined}
+              data-cursor={y === year ? '-magnetic -hot' : '-magnetic'}
+              data-cursor-stick
+              onClick={() => jump(y)}
+            >
               <span className="yy-full">{y}</span>
               <span className="yy-short" aria-hidden="true">
                 ’{String(y).slice(2)}
@@ -176,7 +192,7 @@ export function Chapter({
           <span className="eyebrow-n">{n}</span>
           <span>{years}</span>
         </p>
-        <h2>{title}</h2>
+        <h2 data-cursor="-exclusion -md">{title}</h2>
       </header>
       {children}
     </section>
@@ -194,7 +210,7 @@ export function Prose({ children, year }: { children: ReactNode; year?: number }
 /** A quotation lifted straight from the printed field guide. */
 export function Note({ children, label = 'Field guide' }: { children: ReactNode; label?: string }) {
   return (
-    <p className="note">
+    <p className="note" data-cursor="-opaque -blue">
       <span className="note-label">{label}</span>
       {children}
     </p>
@@ -266,7 +282,7 @@ export function Readout({ items, style }: { items: [string, ReactNode][]; style?
   return (
     <dl className="readout" style={style}>
       {items.map(([k, v]) => (
-        <div key={k}>
+        <div key={k} data-cursor="-opaque">
           <dt>{k}</dt>
           <dd>{v}</dd>
         </div>

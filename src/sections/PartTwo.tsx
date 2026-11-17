@@ -37,6 +37,7 @@ export function Lily() {
         <Figure
           setup={setupLily}
           label="LilyPad Arduino and a sewable LED on fabric"
+          cursorState="-purple"
           view={{ yaw: -0.2, pitch: 0.95, box: [64, 40] }}
           aspect={0.58}
           controls={[{ key: 'sew', label: 'Sew', initial: 0, color: 'var(--purple)', format: pct }]}
@@ -70,17 +71,23 @@ export function Milestones() {
     <div className="miles" aria-label="Meanwhile, off the board">
       <div data-year={2009}>
         <span className="yr">2009</span>
-        <p className="big">On the air</p>
+        <p className="big" data-cursor="-exclusion -md">
+          On the air
+        </p>
         <p>Co-founder Banzi interviewed on TWiT.</p>
       </div>
       <div>
         <span className="yr">2010</span>
-        <p className="big">The IDE takes off</p>
+        <p className="big" data-cursor="-exclusion -md">
+          The IDE takes off
+        </p>
         <p>Arduino IDE begins rapid development.</p>
       </div>
       <div>
         <span className="yr">2011</span>
-        <p className="big">300,000</p>
+        <p className="big" data-cursor="-exclusion -md">
+          300,000
+        </p>
         <p>Arduinos “in the wild”.</p>
       </div>
     </div>
@@ -207,6 +214,7 @@ export function Uno() {
             fill
             setup={setupAnatomy}
             label="Arduino Uno, annotated"
+            cursorState="-teal"
             view={{ yaw: -0.45, pitch: 0.95, radius: 47 }}
             params={{ step: active }}
             controls={[{ key: 'explode', label: 'Explode', initial: 0, color: 'var(--hot)', format: pct }]}
@@ -224,6 +232,7 @@ export function Uno() {
       <Figure
         setup={setupBlink}
         label="Arduino Uno running the Blink sketch"
+        cursorState="-hot"
         view={{ yaw: 0.25, pitch: 1.02, box: [41, 31] }}
         aspect={0.56}
         controls={[
@@ -244,7 +253,7 @@ export function Uno() {
         caption="The orange LED marked L is wired to pin 13. Change the delay and watch the board, then glance at the top-left corner of this page."
       >
         {() => (
-          <pre className="code" aria-label="Blink sketch">
+          <pre className="code" aria-label="Blink sketch" data-cursor="-on-dark">
             <span className="k">void</span> loop() {'{\n'}
             {'  '}digitalWrite(<span className="k">13</span>, HIGH);{'   '}
             <span className="c">// LED on</span>
@@ -297,6 +306,7 @@ export function Mega() {
         <Figure
           setup={setupShield}
           label="A prototyping shield above an Arduino board"
+          cursorState="-teal"
           view={{ yaw: -0.5, pitch: 0.72, radius: 54 }}
           aspect={0.62}
           controls={[
@@ -355,6 +365,7 @@ export function Leonardo() {
         <Figure
           setup={setupSwap}
           label="Arduino Uno turning into an Arduino Leonardo"
+          cursorState="-teal"
           view={{ yaw: 0.15, pitch: 1.0, box: [42, 36] }}
           aspect={0.6}
           controls={[

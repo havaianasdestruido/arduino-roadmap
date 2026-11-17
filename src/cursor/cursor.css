@@ -1,0 +1,494 @@
+/* ------------------------------------------------------------------ */
+/* Cuberto Mouse Follower — full circle cursor stylesheet              */
+/* Adapted from Cuberto/mouse-follower (src/scss/index.scss) and       */
+/* extended with sizes, rings, magnetic halos & field-guide accents.   */
+/* ------------------------------------------------------------------ */
+
+.mf-cursor {
+  --mf-base: var(--ink, #13232c);
+  --mf-fg: var(--paper, #f5f3ec);
+  --mf-size: 48px;
+  --mf-media-size: 256px;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 250;
+  color: var(--mf-base);
+  direction: ltr;
+  contain: layout style size;
+  pointer-events: none;
+  user-select: none;
+  transition:
+    opacity 0.3s ease,
+    color 0.32s ease;
+}
+
+.mf-cursor::before {
+  content: "";
+  position: absolute;
+  top: calc(var(--mf-size) * -0.5);
+  left: calc(var(--mf-size) * -0.5);
+  display: block;
+  width: var(--mf-size);
+  height: var(--mf-size);
+  box-sizing: border-box;
+  transform: scale(0.22);
+  background: currentColor;
+  border: 0 solid currentColor;
+  border-radius: 50%;
+  opacity: 1;
+  transition:
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.2s ease,
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    border-width 0.2s ease;
+}
+
+.mf-cursor-inner {
+  position: relative;
+}
+
+/* ---------- color accents (dark-default + light-mode contrast) ---------- */
+
+.mf-cursor.-inverse {
+  color: var(--paper, #10181c);
+  --mf-fg: var(--ink, #e7ece8);
+}
+
+.mf-cursor.-on-dark {
+  color: #f5f3ec;
+  --mf-fg: #13232c;
+}
+
+.mf-cursor.-on-light {
+  color: #13232c;
+  --mf-fg: #f5f3ec;
+}
+
+.mf-cursor.-teal {
+  color: var(--teal, #2aabb4);
+  --mf-fg: #10181c;
+}
+
+.mf-cursor.-cyan {
+  color: var(--cyan, #4ec5e0);
+  --mf-fg: #10181c;
+}
+
+.mf-cursor.-blue {
+  color: var(--blue, #7eb4e0);
+  --mf-fg: #10181c;
+}
+
+.mf-cursor.-gold {
+  color: var(--gold, #d4a03a);
+  --mf-fg: #10181c;
+}
+
+.mf-cursor.-hot {
+  color: var(--hot, #e86a38);
+  --mf-fg: #10181c;
+}
+
+.mf-cursor.-copper {
+  color: var(--copper, #d48955);
+  --mf-fg: #10181c;
+}
+
+.mf-cursor.-purple {
+  color: var(--purple, #b07ad4);
+  --mf-fg: #10181c;
+}
+
+html[data-theme="light"] .mf-cursor.-teal,
+html[data-theme="light"] .mf-cursor.-blue,
+html[data-theme="light"] .mf-cursor.-gold,
+html[data-theme="light"] .mf-cursor.-hot,
+html[data-theme="light"] .mf-cursor.-copper,
+html[data-theme="light"] .mf-cursor.-purple {
+  --mf-fg: #ffffff;
+}
+
+html[data-theme="light"] .mf-cursor.-cyan {
+  --mf-fg: #13232c;
+}
+
+/* ---------- active (mousedown) ---------- */
+
+.mf-cursor.-active::before {
+  transform: scale(0.16);
+  transition-duration: 0.18s;
+}
+
+/* ---------- pointer & magnetic ---------- */
+
+.mf-cursor.-pointer::before {
+  transform: scale(0.72);
+  opacity: 0.16;
+}
+
+.mf-cursor.-pointer.-active::before {
+  transform: scale(0.56);
+  opacity: 0.24;
+}
+
+.mf-cursor.-magnetic::before {
+  transform: scale(0.8);
+  opacity: 0.14;
+}
+
+.mf-cursor.-magnetic.-active::before {
+  transform: scale(0.66);
+  opacity: 0.24;
+}
+
+/* ---------- opaque & solid circles ---------- */
+
+.mf-cursor.-opaque::before {
+  transform: scale(1.25);
+  opacity: 0.14;
+}
+
+.mf-cursor.-opaque.-active::before {
+  transform: scale(1.08);
+  opacity: 0.22;
+}
+
+.mf-cursor.-solid::before {
+  transform: scale(1.25);
+  opacity: 1;
+}
+
+.mf-cursor.-solid.-active::before {
+  transform: scale(1.1);
+}
+
+/* ---------- ring (hollow circle) ---------- */
+
+.mf-cursor.-ring::before {
+  transform: scale(0.82);
+  background: transparent;
+  border-width: 1.75px;
+  opacity: 0.82;
+}
+
+.mf-cursor.-ring.-active::before {
+  transform: scale(0.68);
+  opacity: 1;
+}
+
+.mf-cursor.-ring.-lg::before {
+  border-width: 1.1px;
+}
+
+.mf-cursor.-ring.-xl::before {
+  border-width: 0.85px;
+}
+
+/* ---------- size modifiers ---------- */
+
+.mf-cursor.-sm::before {
+  transform: scale(0.14);
+}
+
+.mf-cursor.-md::before {
+  transform: scale(1.15);
+}
+
+.mf-cursor.-md.-active::before {
+  transform: scale(1.02);
+}
+
+.mf-cursor.-lg::before {
+  transform: scale(1.85);
+}
+
+.mf-cursor.-lg.-active::before {
+  transform: scale(1.68);
+}
+
+.mf-cursor.-xl::before {
+  transform: scale(2.5);
+}
+
+.mf-cursor.-xl.-active::before {
+  transform: scale(2.25);
+}
+
+/* ---------- exclusion blend lens ---------- */
+
+@supports (mix-blend-mode: exclusion) {
+  .mf-cursor.-exclusion {
+    mix-blend-mode: exclusion;
+  }
+
+  .mf-cursor.-exclusion::before {
+    background: #ffffff;
+    border-width: 0;
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  .mf-cursor.-exclusion.-md::before {
+    transform: scale(1.3);
+  }
+
+  .mf-cursor.-exclusion.-lg::before {
+    transform: scale(2);
+  }
+
+  .mf-cursor.-exclusion.-xl::before {
+    transform: scale(2.65);
+  }
+
+  .mf-cursor.-exclusion.-active::before {
+    transform: scale(0.9);
+  }
+
+  .mf-cursor.-exclusion.-md.-active::before {
+    transform: scale(1.14);
+  }
+
+  .mf-cursor.-exclusion.-lg.-active::before {
+    transform: scale(1.78);
+  }
+
+  .mf-cursor.-exclusion.-xl.-active::before {
+    transform: scale(2.38);
+  }
+}
+
+/* ---------- text & icon modes ---------- */
+
+.mf-cursor.-text::before {
+  opacity: 0.9;
+  background: currentColor;
+  border-width: 0;
+  transform: scale(1.58);
+}
+
+.mf-cursor.-text.-active::before {
+  transform: scale(1.44);
+  transition-duration: 0.18s;
+}
+
+.mf-cursor.-text.-lg::before {
+  transform: scale(2);
+}
+
+.mf-cursor.-text.-lg.-active::before {
+  transform: scale(1.84);
+}
+
+.mf-cursor.-icon::before {
+  opacity: 0.92;
+  background: currentColor;
+  border-width: 0;
+  transform: scale(1.22);
+}
+
+.mf-cursor.-icon.-active::before {
+  transform: scale(1.08);
+  transition-duration: 0.18s;
+}
+
+.mf-cursor.-icon.-lg::before {
+  transform: scale(1.6);
+}
+
+.mf-cursor.-icon.-lg.-active::before {
+  transform: scale(1.46);
+}
+
+.mf-cursor-text {
+  position: absolute;
+  top: -28px;
+  left: -28px;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0) rotate(10deg);
+  opacity: 0;
+  color: var(--mf-fg);
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  text-align: center;
+  transition:
+    opacity 0.28s ease,
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mf-cursor.-text .mf-cursor-text,
+.mf-cursor.-icon .mf-cursor-text {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.mf-cursor-text > svg,
+.mf-svgsprite {
+  width: 22px;
+  height: 22px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.mf-cursor-icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+  object-fit: contain;
+}
+
+/* ---------- 3D drag / slider scrub unobstructed ring ---------- */
+
+.mf-cursor.-dragging::before,
+.mf-cursor.-dragging.-active::before,
+.mf-cursor.-text.-dragging::before,
+.mf-cursor.-text.-dragging.-active::before,
+.mf-cursor.-icon.-dragging::before,
+.mf-cursor.-icon.-dragging.-active::before {
+  transform: scale(0.92);
+  background: transparent;
+  border-width: 1.75px;
+  opacity: 0.88;
+  transition-duration: 0.18s;
+}
+
+.mf-cursor.-dragging .mf-cursor-text,
+.mf-cursor.-text.-dragging .mf-cursor-text,
+.mf-cursor.-icon.-dragging .mf-cursor-text {
+  opacity: 0;
+  transform: scale(0.45);
+  transition-duration: 0.15s;
+}
+
+/* ---------- media mode (circular image / video / canvas) ---------- */
+
+.mf-cursor.-media::before,
+.mf-cursor.-media.-active::before,
+.mf-cursor.-pointer.-media::before,
+.mf-cursor.-pointer.-media.-active::before {
+  transform: scale(0);
+  opacity: 0;
+}
+
+.mf-cursor-media {
+  position: absolute;
+  width: var(--mf-media-size);
+  height: var(--mf-media-size);
+  margin: calc(var(--mf-media-size) * -0.5) 0 0 calc(var(--mf-media-size) * -0.5);
+}
+
+.mf-cursor-media img,
+.mf-cursor-media video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+
+@supports (object-fit: cover) {
+  .mf-cursor-media img,
+  .mf-cursor-media video {
+    position: static;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: translateZ(0);
+  }
+}
+
+.mf-cursor-media-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transform: scale(0) translateZ(0);
+  padding: 1px;
+  opacity: 0;
+  border-radius: 50%;
+  box-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(231, 236, 232, 0.12);
+  transition:
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.2s ease 0.12s;
+}
+
+html[data-theme="light"] .mf-cursor-media-box {
+  box-shadow: 0 14px 36px rgba(19, 35, 44, 0.28);
+}
+
+.mf-cursor.-media .mf-cursor-media-box {
+  opacity: 1;
+  transform: scale(0.7) translateZ(0);
+  transition-duration: 0.38s, 0.28s;
+  transition-delay: 0s, 0s;
+}
+
+.mf-cursor.-media.-active .mf-cursor-media-box {
+  transform: scale(0.64) translateZ(0);
+}
+
+.mf-cursor.-media.-media-sm .mf-cursor-media-box {
+  transform: scale(0.5) translateZ(0);
+}
+
+.mf-cursor.-media.-media-lg .mf-cursor-media-box {
+  transform: scale(0.92) translateZ(0);
+}
+
+/* Floats the circular media preview cleanly above a hovered label */
+.mf-cursor.-media-float .mf-cursor-media {
+  margin: calc(var(--mf-media-size) * -0.9) 0 0 calc(var(--mf-media-size) * -0.5);
+}
+
+/* ---------- hidden state (wins over every other state) ---------- */
+
+.mf-cursor.-hidden::before {
+  transform: scale(0) !important;
+  opacity: 0 !important;
+}
+
+.mf-cursor.-hidden .mf-cursor-text {
+  opacity: 0 !important;
+  transform: scale(0) !important;
+}
+
+.mf-cursor.-hidden .mf-cursor-media-box {
+  opacity: 0 !important;
+  transform: scale(0) translateZ(0) !important;
+}
+
+/* ---------- touch, print & reduced motion ---------- */
+
+@media (hover: none), (pointer: coarse) {
+  .mf-cursor {
+    display: none !important;
+  }
+}
+
+@media print {
+  .mf-cursor {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mf-cursor,
+  .mf-cursor::before,
+  .mf-cursor-text,
+  .mf-cursor-media-box {
+    transition: none;
+  }
+}

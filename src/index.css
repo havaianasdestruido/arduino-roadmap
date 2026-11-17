@@ -1003,6 +1003,20 @@ figcaption {
   font-size: 0.74rem;
   color: var(--ink-2);
 }
+.legend li {
+  padding-block: 0.12rem;
+  transition: color 0.15s;
+}
+@media (hover: hover) and (pointer: fine) {
+  .legend li {
+    text-decoration: underline dotted var(--line);
+    text-underline-offset: 0.28em;
+  }
+  .legend li:hover {
+    color: var(--ink);
+    text-decoration-color: var(--ink-2);
+  }
+}
 
 /* ---------- footer ---------- */
 
