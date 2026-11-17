@@ -135,12 +135,12 @@ export function TopBar() {
       <a
         className="bar-brand"
         href="#top"
-        aria-label="Evolution of Arduino — back to top"
+        aria-label="arduino-roadmap — back to top"
         data-cursor="-magnetic -teal"
         data-cursor-stick
       >
         <span className="bar-led" style={{ animationDuration: `${blink * 2}ms` }} aria-hidden="true" />
-        <span className="bar-name">Board Field Guide</span>
+        <span className="bar-name">arduino-roadmap</span>
       </a>
       <div className="bar-end">
         <nav className="bar-years" aria-label="Jump to year">
