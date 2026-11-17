@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
+import { getCursor } from '../cursor';
 
 /**
  * One shared WebGL renderer draws every figure on the page.
@@ -154,6 +155,7 @@ export class Fig {
         /* pointer already gone */
       }
       c.classList.add('is-dragging');
+      if (e.pointerType === 'mouse') getCursor()?.addState('-dragging');
       this.onInteract?.();
     };
     const move = (e: PointerEvent) => {
@@ -175,6 +177,7 @@ export class Fig {
       if (!this.dragging) return;
       this.dragging = false;
       c.classList.remove('is-dragging');
+      getCursor()?.removeState('-dragging');
       if (performance.now() - lt > 90 || prefersReduced()) this.vy = this.vp = 0;
       kick();
     };
@@ -338,6 +341,7 @@ export class Fig {
   }
 
   dispose() {
+    if (this.dragging) getCursor()?.removeState('-dragging');
     figs.delete(this);
     this.undo.forEach((u) => u());
     this.animators = [];

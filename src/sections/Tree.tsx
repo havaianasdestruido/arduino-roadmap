@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Chapter, Prose } from '../components/layout';
+import { getChipPreview } from '../cursor';
 
 const CHIPS: Record<string, [string, string]> = {
   m8: ['ATmega8', '#00979d'],
@@ -174,6 +175,7 @@ export function Tree() {
                   tabIndex={0}
                   aria-pressed={n.id === sel}
                   aria-label={`${n.label}, ${Math.floor(n.yr)}, ${CHIPS[n.chip][0]}`}
+                  data-cursor="-ring"
                   onClick={() => setSel(n.id)}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
@@ -198,12 +200,12 @@ export function Tree() {
             {Math.floor(node.yr)} · <span className="swatch" style={{ background: chip[1] }} />
             {chip[0]}
           </p>
-          <h3>{node.label}</h3>
+          <h3 data-cursor="-exclusion">{node.label}</h3>
           <p>{node.quoted ? <span style={{ color: 'var(--blue)' }}>“{node.note}”</span> : node.note}</p>
         </div>
         <ul className="legend" aria-label="Processor colours">
-          {Object.values(CHIPS).map(([name, color]) => (
-            <li key={name}>
+          {Object.entries(CHIPS).map(([key, [name, color]]) => (
+            <li key={key} data-cursor="-media-float" data-cursor-img={getChipPreview(key)}>
               <span className="swatch" style={{ background: color }} />
               {name}
             </li>

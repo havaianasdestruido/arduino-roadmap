@@ -1,11 +1,12 @@
 import { TopBar } from './components/layout';
+import { CursorProvider } from './cursor';
 import { Chip, Etch, Hero, Lineage, Origins, Small } from './sections/PartOne';
 import { Due, Leonardo, Lily, Mega, Milestones, Uno } from './sections/PartTwo';
 import { Tree } from './sections/Tree';
 
 export default function App() {
   return (
-    <>
+    <CursorProvider>
       <TopBar />
       <main>
         <Hero />
@@ -22,9 +23,9 @@ export default function App() {
         <Due />
         <Tree />
       </main>
-      <footer className="foot">
+      <footer className="foot" data-cursor="-inverse">
         <div className="foot-in">
-          <p className="tag">
+          <p className="tag" data-cursor="-exclusion">
             <b>Special</b>
             <span>Board Field Guide</span>
           </p>
@@ -38,6 +39,6 @@ export default function App() {
           </p>
         </div>
       </footer>
-    </>
+    </CursorProvider>
   );
 }
