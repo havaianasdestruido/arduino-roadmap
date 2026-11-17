@@ -397,8 +397,13 @@ export const setupMemory: Setup = (fig) => {
   for (let i = 0; i < N; i++) mesh.setColorAt(i, col.set(TIER_COLORS[TIERS.findIndex((t) => i < t)]));
   const frame = new THREE.LineSegments(
     new THREE.EdgesGeometry(new THREE.BoxGeometry(8, 8, 8)),
-    new THREE.LineBasicMaterial({ color: 0x13232c, transparent: true, opacity: 0.22 }),
+    new THREE.LineBasicMaterial({
+      color: getComputedStyle(document.documentElement).getPropertyValue('--ink').trim() || '#e7ece8',
+      transparent: true,
+      opacity: 0.22,
+    }),
   );
+  frame.userData.themeInk = true;
   frame.position.y = 4;
   const g = P.group(mesh, frame);
   g.position.y = -4;

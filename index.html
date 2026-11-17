@@ -1,9 +1,17 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f5f3ec" />
+    <meta name="theme-color" content="#10181c" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('arduino-theme');
+          if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+        } catch (e) {}
+      })();
+    </script>
     <meta
       name="description"
       content="An interactive field guide to the evolution of Arduino, 2005–2013. Turn the boards over, lift the chips apart, pull the sliders."

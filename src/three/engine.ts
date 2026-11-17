@@ -70,6 +70,25 @@ function kick() {
   }
 }
 
+export function inkColor() {
+  if (typeof document === 'undefined') return '#e7ece8';
+  return getComputedStyle(document.documentElement).getPropertyValue('--ink').trim() || '#e7ece8';
+}
+
+/** Retint 3D labels and guides that follow the page ink colour. */
+export function refreshTheme() {
+  const c = new THREE.Color(inkColor());
+  figs.forEach((f) => {
+    f.scene.traverse((o) => {
+      if (!o.userData.themeInk) return;
+      const mat = (o as THREE.Mesh).material as THREE.MeshBasicMaterial | THREE.LineBasicMaterial | THREE.MeshBasicMaterial[];
+      if (Array.isArray(mat)) mat.forEach((m) => m.color?.copy(c));
+      else if (mat?.color) mat.color.copy(c);
+    });
+    f.invalidate();
+  });
+}
+
 const HALF = Math.PI / 2;
 
 export class Fig {

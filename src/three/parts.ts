@@ -726,17 +726,26 @@ export function led(color: number, th = false) {
 }
 
 /** Text lying flat on the "floor" of a figure. */
-export function floorLabel(text: string, w: number, h: number, color = '#13232c') {
+export function floorLabel(text: string, w: number, h: number, color?: string) {
   const s = 640 / w;
   const tex = canvasTex(640, Math.round(h * s), (c, W, H) => {
-    c.fillStyle = color;
+    c.fillStyle = '#ffffff';
     c.font = `600 ${H * 0.6}px "IBM Plex Mono", ui-monospace, Menlo, monospace`;
     c.textAlign = 'center';
     c.textBaseline = 'middle';
     c.fillText(text, W / 2, H / 2);
   });
-  return new THREE.Mesh(
+  const mesh = new THREE.Mesh(
     new THREE.PlaneGeometry(w, h).rotateX(-Math.PI / 2),
-    new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide }),
+    new THREE.MeshBasicMaterial({
+      map: tex,
+      color: new THREE.Color(color ?? (getComputedStyle(document.documentElement).getPropertyValue('--ink').trim() || '#e7ece8')),
+      transparent: true,
+      depthWrite: false,
+      toneMapped: false,
+      side: THREE.DoubleSide,
+    }),
   );
+  mesh.userData.themeInk = !color;
+  return mesh;
 }
